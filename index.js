@@ -2,7 +2,9 @@
 
 const on_off_btn = document.getElementById("on-Btn");
 const display = document.getElementById("display");
+const AnsBtn = document.getElementById("Ans-Btn");
 
+AnsBtn.value = 0;
 let math_op = "";
 let isOn = false;
 
@@ -37,10 +39,22 @@ function appendToDisplay(input) {
        return;
     }
 
+    if(input === AnsBtn.value){
+        if (math_op === '0') {
+            math_op = input;
+            display.value = 'Ans';
+            return;
+        }
+        math_op += input;
+        display.value += 'Ans';
+        return;
+    }
+
     if((input != '.' && input != '²') && math_op === '0'){
         math_op = input;
         display.value = input;
     }
+
     else {
         math_op += input;
         display.value += input;
@@ -143,6 +157,7 @@ function calculate() {
 
         display.value = eval(result);
         math_op = display.value;
+        AnsBtn.value = math_op
         result = "";
     }
     catch {
@@ -152,6 +167,10 @@ function calculate() {
     }
 }
 
-
+AnsBtn.addEventListener("click",
+    function showAns(){
+        appendToDisplay(AnsBtn.value);
+    }
+)
 
 
